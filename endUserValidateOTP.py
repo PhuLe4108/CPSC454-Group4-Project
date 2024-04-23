@@ -1,41 +1,81 @@
+import tkinter as tk
 import socket
 import time
 
-i = 0
-
-def verify_cred(name, pssw):
-    file = open("user.txt", "r")
-    cred = file.read().splitlines()
-    if cred[0] == name and cred[1] == pssw:
-        return True
-    
-    print("Wrong username or password!")
-    return False
-
-
+# Function to send OTP to the server and get the response
 def verify_otp_with_server(otp):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-        client.connect(('192.168.142.4', 9999))
+        client.connect(('localhost', 9999))  # Connect to server on port 9999
         client.sendall(b"verify_otp")  # Inform server of the operation type
         time.sleep(0.1)  # Small delay to ensure separate TCP packets
-        client.sendall(otp.encode())  # Send the actual OTP
-        response = client.recv(1024).decode()  # Receive the response
+        client.sendall(otp.encode())  # Send the OTP to the server
+        response = client.recv(1024).decode()  # Receive the server's response
         return response
-    
 
-def main():
-    name = input("Username: ")
-    pssw = input("Password: ")
-    if verify_cred(name, pssw):
-        otp_input = input("Please enter the OTP you received: ").strip()
-        response = verify_otp_with_server(otp_input)
-        print(f"Server response: {response}")
+# Function to handle OTP submission
+def submit_otp():
+    otp = otp_entry.get()  # Get OTP from the input field
+    response = verify_otp_with_server(otp)  # Verify OTP with server
+    otp_response_label.config(text=f"{response}")  # Display response
 
-        if response == "Token verified successfully!":
-            print(f"Access Granted\n")
+# Function to handle login submission
+def submit_login():
+    username = username_entry.get()
+    password = password_entry.get()
 
+    # Check hardcoded login credentials
+    if username == "admin" and password == "admin":
+        login_frame.pack_forget()  # Hide the login frame
+        otp_frame.pack()  # Show the OTP frame
+    else:
+        login_response_label.config(text="Invalid username or password")  # Display error
 
-    
+# Create the main Tkinter window
+root = tk.Tk()
+root.title("Login and OTP Verification")
 
-if __name__ == "__main__":
-    main()
+# Create the login frame
+login_frame = tk.Frame(root)
+login_frame.pack(padx=10, pady=10)
+
+# Create and place the login widgets
+login_label = tk.Label(login_frame, text="Please login")
+login_label.pack()
+
+username_label = tk.Label(login_frame, text="Username:")
+username_label.pack()
+
+username_entry = tk.Entry(login_frame, width=20)
+username_entry.pack(pady=5)
+
+password_label = tk.Label(login_frame, text="Password:")
+password_label.pack()
+
+password_entry = tk.Entry(login_frame, width=20, show="*")
+password_entry.pack(pady=5)
+
+login_button = tk.Button(login_frame, text="Login", command=submit_login)
+login_button.pack(pady=5)
+
+login_response_label = tk.Label(login_frame, text="")
+login_response_label.pack(pady=10)
+
+# Create the OTP frame
+otp_frame = tk.Frame(root)
+otp_frame.pack_forget()  # Hide OTP frame initially
+
+# Create and place the OTP widgets
+otp_label = tk.Label(otp_frame, text="Please enter the OTP you received:")
+otp_label.pack()
+
+otp_entry = tk.Entry(otp_frame, width=20)
+otp_entry.pack(pady=5)
+
+otp_submit_button = tk.Button(otp_frame, text="Submit OTP", command=submit_otp)
+otp_submit_button.pack(pady=5)
+
+otp_response_label = tk.Label(otp_frame, text="")
+otp_response_label.pack(pady=10)
+
+# Run the Tkinter event loop
+root.mainloop()

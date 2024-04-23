@@ -41,9 +41,9 @@ def main():
                 print(f"Received token for verification: {received_token}")
                 # Verify the OTP token
                 if totp.verify(received_token):
-                    response = "Token verified successfully!"
+                    response = "OTP code verified!"
                 else:
-                    response = "Invalid token."
+                    response = "Invalid OTP code."
                 # Send the verification result back to the client
                 client.sendall(response.encode())
         

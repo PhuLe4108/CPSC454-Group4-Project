@@ -10,6 +10,7 @@ def main():
 
     # Set up a socket server on local host and port 9999
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Replace localhost with IP address of the machine running server.py (this machine)
     server.bind(('localhost', 9999))
     server.listen(1)
     print("Server is listening on port 9999")

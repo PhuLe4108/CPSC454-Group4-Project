@@ -12,16 +12,17 @@
   - Kiet Hoang, kiethoang1411@csu.fullerton.edu
 
 **Usage**
-Server - authentication server, generate OTP
-_replace 'localhost' in the file with the IP of the authentication server
-_run 'python3 server.py' in the terminal
 
-Client - front end of authentication server, displaying the OTP
-_replace 'localhost' in the file with the IP of the authentication server
-_run 'python3 client.py' in the terminal
+Server - authentication server, generate OTP<br>
+_replace 'localhost' in the file with the IP of the authentication server<br>
+_run 'python3 server.py' in the terminal<br>
 
-endUserValidateOTP - a resource/application that use authentication server as MFA
-_replace 'localhost' in the file with the IP of the authentication server
-_run 'python3 endUserValidateOTP.py' in the terminal
-_enter 'admin' for both username and password
-_wait for the next OTP from client and enter the code to be verified
+Client - front end of authentication server, displaying the OTP<br>
+_replace 'localhost' in the file with the IP of the authentication server<br>
+_run 'python3 client.py' in the terminal<br>
+
+endUserValidateOTP - a resource/application that use authentication server as MFA<br>
+_replace 'localhost' in the file with the IP of the authentication server<br>
+_run 'python3 endUserValidateOTP.py' in the terminal<br>
+_enter 'admin' for both username and password<br>
+_wait for the next OTP from client and enter the code to be verified<br>

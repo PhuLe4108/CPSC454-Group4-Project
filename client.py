@@ -3,6 +3,7 @@ import time
 
 def get_otp_from_server():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
+        # Replace localhost with IP address of the machine running server.py
         client.connect(('localhost', 9999))
         client.sendall(b"send_otp")
         otp = client.recv(1024).decode()

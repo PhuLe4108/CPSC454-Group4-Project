@@ -5,6 +5,7 @@ import time
 # Function to send OTP to the server and get the response
 def verify_otp_with_server(otp):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
+        # Replace localhost with IP address of the machine running server.py
         client.connect(('localhost', 9999))  # Connect to server on port 9999
         client.sendall(b"verify_otp")  # Inform server of the operation type
         time.sleep(0.1)  # Small delay to ensure separate TCP packets

@@ -26,3 +26,9 @@ _replace 'localhost' in the file with the IP of the authentication server<br>
 _run 'python3 endUserValidateOTP.py' in the terminal<br>
 _enter 'admin' for both username and password<br>
 _wait for the next OTP from client and enter the code to be verified<br>
+
+**Reference**
+
+Tkinter<br>
+Open source code<br>
+Kiet Hoang project's template<br>
